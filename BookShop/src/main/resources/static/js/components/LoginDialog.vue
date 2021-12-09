@@ -72,7 +72,7 @@
   </v-row>
 </template>
 <script>
-import axios from "axios";
+import {getAxios} from '../modules/httpComon.js';
 
 export default {
     data: () => ({
@@ -82,12 +82,14 @@ export default {
     message: ''
   }),
  mounted() {
-      if(localStorage.getItem("jwtToken") == null){
+      if(this.$cookie.get("jwtToken") == null){
         this.$store.commit("setIdent", false);
+        this.$store.commit("isAdmin", false);
       }
       else
       {
         this.$store.commit("setIdent", true);
+        this.isAdmin(this.$cookie.get("jwtToken"));
       }
  },
   methods: {
@@ -95,27 +97,26 @@ export default {
       let bodyFormData = new FormData();
       bodyFormData.append("username", this.username);
       bodyFormData.append("password", this.password);
-      axios({method: "post",
-             url: "/login",
-             data: bodyFormData,
-             headers: { "Content-Type": "multipart/form-data" }})
-          .then(response =>
-          {localStorage.setItem("jwtToken", response.data.jwt);
+      getAxios(null).post("/login", bodyFormData)
+      .then(response =>
+          {let jwt = response.data.jwt;
+            this.isAdmin(jwt);
+            this.$cookie.set("jwtToken", jwt, 1)
             this.$store.commit("setIdent", true);
             this.dialog = false;
           })
           .catch(error => {
             this.message = "Incorrect login or password";
           });
+
     },
     logOut: function (){
-      axios({method: "post",
-        url: "/logout",
-        headers: {"Content-Type": "multipart/form-data" }})
+      getAxios(null).post("/logout")
           .then(response =>
           { this.password = null;
-            localStorage.removeItem("jwtToken");
+            this.$cookie.delete("jwtToken")
             this.$store.commit("setIdent", false);
+            this.$store.commit("isAdmin", false);
           })
           .catch(error => {
             console.log(error);
@@ -124,6 +125,17 @@ export default {
     exit: function (){
       this.password = null;
       this.dialog = false;
+    },
+    isAdmin: function (jwt){
+      let jwtData = jwt.split('.')[1];
+      let decodedJwtJsonData = window.atob(jwtData);
+      for (let i = 0; i < JSON.parse(decodedJwtJsonData).roles.length; i++){
+        let role = JSON.parse(decodedJwtJsonData).roles[i].name;
+        if(role == "ROLE_ADMIN"){
+          this.$store.commit("isAdmin", true);
+          break;
+        }
+      }
     }
   }
 }

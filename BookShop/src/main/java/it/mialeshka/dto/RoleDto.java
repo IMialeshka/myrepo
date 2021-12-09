@@ -7,7 +7,7 @@ import java.util.List;
 public class RoleDto {
     private Long id;
     private String name;
-    private List<UserShop> users;
+    private List<UserShopDto> users;
 
     public Long getId() {
         return id;
@@ -25,11 +25,11 @@ public class RoleDto {
         this.name = name;
     }
 
-    public List<UserShop> getUsers() {
-        return users;
+    public List<UserShopDto> getUsers() {
+        return null;
     }
 
-    public void setUsers(List<UserShop> users) {
+    public void setUsers(List<UserShopDto> users) {
         this.users = users;
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserShopServiceImpl userShopService;
@@ -51,17 +53,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests().antMatchers(
-                            "/*.html",
-                          "/favicon.ico",
-                           "/**/*.html",
-                         "/**/*.css",
-                           "/**/*.js",
-                          "/**/*.svg",
-                         "/**/*.ico",
-                         "/**/*.png"
-                        ).permitAll().
-                        antMatchers( "/", "/login","/booksList")
+                "/*.html",
+                "/favicon.ico",
+                "/**/*.html",
+                "/**/*.css",
+                "/**/*.js",
+                "/**/*.svg",
+                "/**/*.ico",
+                "/**/*.png"
+        ).permitAll().
+                antMatchers( "/", "/login","/booksList", "/showCover/*.*", "/readBook/*.*")
                 .permitAll().anyRequest().authenticated()
+                 .and().logout().logoutUrl("/logout").permitAll()
+                .logoutSuccessHandler((httpServletRequest, httpServletResponse, authentication) -> {
+            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+        })
                 .and().exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

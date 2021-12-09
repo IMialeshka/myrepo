@@ -3,7 +3,8 @@
     <v-dialog
         v-model="dialog"
         persistent
-        max-width="450px"
+        max-width="700px"
+        max-height="1000px"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -11,7 +12,7 @@
             dark
             v-bind="attrs"
             v-on="on"
-            v-show="$store.getters.ident"
+            v-show="$store.getters.isAdmin"
         >
           Load book
         </v-btn>
@@ -28,10 +29,10 @@
                   v-if="this.save_dialog"
               >
               <v-img
-                  lazy-src="file:/D:/BookShop/Covers/00ac891a-d55d-4a33-8bc7-7da0bd460eb1.png"
-                  max-height="150"
-                  max-width="250"
-                  src="file:/D:/BookShop/Covers/00ac891a-d55d-4a33-8bc7-7da0bd460eb1.png"
+                  :lazy-src="/showCover/+bookCover"
+                  max-height="900"
+                  max-width="600"
+                  :src="/showCover/+bookCover"
               ></v-img>
               </v-col>
               <v-col
@@ -106,7 +107,7 @@
   </v-row>
 </template>
 <script>
-import axios from "axios";
+import {getAxios} from '../modules/httpComon.js';
 export default {
   data: () => ({
     dialog: false,
@@ -115,8 +116,7 @@ export default {
     name: null,
     writer: null,
     bookFile: null,
-    file_cover: null,
-    path_file_cover: null,
+    bookCover: null,
     genre: null,
     save_dialog: false
   }),
@@ -124,21 +124,15 @@ export default {
     parseBook: function() {
       let bodyFormData = new FormData();
       bodyFormData.append("file", this.file);
-      axios({method: "post",
-        url: "/getmetainfo",
-        data: bodyFormData,
-        headers: { "Content-Type": "multipart/form-data" ,
-                   "Authorization": "Bearer " + localStorage.getItem("jwtToken")}})
+      getAxios(this.$cookie.get("jwtToken")).post("/getmetainfo", bodyFormData)
           .then(response =>
           {this.message = response.data.ErrInfo;
             if(this.message == null){
                this.name = response.data.name;
                this.writer = response.data.writer;
                this.bookFile = response.data.bookFile;
-               this.file_cover = response.data.file_cover;
-               this.path_file_cover = response.data.path_file_cover;
+               this.bookCover = response.data.bookCover;
                this.genre = null;
-               this.file = null;
                this.save_dialog = true;
             }
           })
@@ -147,15 +141,33 @@ export default {
           });
     },
     save: function (){
+      let bodyFormData = new FormData();
+      bodyFormData.append("name", this.name);
+      bodyFormData.append("writer", this.writer);
+      bodyFormData.append("genre", this.genre);
+      bodyFormData.append("bookFile", this.bookFile);
+      bodyFormData.append("bookCover", this.bookCover);
+      getAxios(this.$cookie.get("jwtToken"))
+      .post("/saveNewBook", bodyFormData)
+          .then(response =>
+          {let savedBook = response.data;
+            this.$store.commit("savedBook", savedBook);
+            this.installDefaultValue();
+          })
+          .catch(error => {
+            console.log(error);
+          });
 
     },
     exit: function (){
+      this.installDefaultValue();
+    },
+    installDefaultValue: function () {
       this.save_dialog = false;
       this.name = null;
       this.writer = null;
       this.bookFile = null;
-      this.file_cover = null;
-      this.path_file_cover = null;
+      this.bookCover = null;
       this.file = null;
       this.genre = null;
       this.dialog = false;

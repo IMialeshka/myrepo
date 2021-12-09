@@ -6,23 +6,30 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         ident: true,
-        saveDialog: false
+        savedBook: null,
+        isAdmin: false
     },
 
     getters: {
         ident: state => {
             return state.ident;
         },
-        saveDialog: state => {
-            return state.saveDialog;
+        savedBook: state => {
+            return state.savedBook;
+        },
+        isAdmin: state => {
+            return state.isAdmin;
         }
     },
     mutations: {
         setIdent(state, setValue) {
             state.ident = setValue;
         },
-        bookSaveDialog(state, setValue) {
-            state.saveDialog = setValue;
+        savedBook(state, setValue) {
+            state.savedBook = setValue;
         },
+        isAdmin(state, setValue) {
+            state.isAdmin = setValue;
+        }
     }
 })

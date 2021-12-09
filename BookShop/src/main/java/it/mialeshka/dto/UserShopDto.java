@@ -1,4 +1,5 @@
 package it.mialeshka.dto;
+import it.mialeshka.entity.Book;
 import it.mialeshka.entity.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,19 +9,19 @@ import java.util.List;
 
 
 public class UserShopDto {
-    private Long idUser;
+    private Long id;
     private String username;
     private String name;
     private String password;
-    private List<Role> roles;
-/*    private List<BookDto> booksList;*/
+    private List<RoleDto> roles;
+    private List<BookDto> booksList;
 
-    public Long getIdUser() {
-        return idUser;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -47,11 +48,19 @@ public class UserShopDto {
         this.password = password;
     }
 
-/*    public List<BookDto> getBooksList() {
-        return booksList;
+    public List<RoleDto> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleDto> roles) {
+        this.roles = roles;
+    }
+
+    public List<BookDto> getBooksList() {
+        return null;
     }
 
     public void setBooksList(List<BookDto> booksList) {
         this.booksList = booksList;
-    }*/
+    }
 }

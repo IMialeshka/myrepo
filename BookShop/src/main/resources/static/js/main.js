@@ -5,21 +5,21 @@ import store from './plugins/store'
 import BooksView from './components/BooksView.vue'
 import LoginDialog from './components/LoginDialog.vue'
 import LoadBook from './components/LoadBook.vue'
-//import SaveBook from './components/SaveBook.vue'
+
 
 Vue.component('component-books', BooksView );
 Vue.component('component-login', LoginDialog );
 Vue.component('component-load', LoadBook );
-//Vue.component('component-save', SaveBook );
 
-
-
+const cookie = require('vue-cookie');
+Vue.use(cookie);
 
 
 new Vue({
     el: '#app',
     vuetify,
     store,
+    cookie,
    // router,
     render: a =>a(App)
 })

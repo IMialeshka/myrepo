@@ -16,6 +16,24 @@ public class Book {
     private String genre;
     private String coverBook;
     private String fileName;
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<UserShop> userShopList;
+
+    public List<UserShop> getUserShopList() {
+        return userShopList;
+    }
+
+    public void setUserShopList(List<UserShop> userShopList) {
+        this.userShopList = userShopList;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getCoverBook() {
         return coverBook;

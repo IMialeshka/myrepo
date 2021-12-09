@@ -35,7 +35,7 @@ public class Role implements GrantedAuthority {
     }
 
     public List<UserShop> getUsers() {
-        return users;
+        return null;
     }
 
     public void setUsers(List<UserShop> users) {

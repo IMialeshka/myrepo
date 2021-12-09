@@ -9,7 +9,7 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface UserShopMapper {
     @Mappings({
-            @Mapping(target = "password", constant = "")
+            @Mapping(target = "password", constant = ""),
     })
     public UserShopDto toUserShopDto(UserShop userShop);
     public UserShop toUserShop(UserShopDto userShopDto);

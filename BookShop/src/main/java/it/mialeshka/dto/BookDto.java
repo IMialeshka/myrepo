@@ -7,28 +7,28 @@ import java.util.List;
 
 
 public class BookDto {
-    private Long idBook;
+    private Long id;
     private String name;
     private String writer;
     private String genre;
-    private String fileCover;
-    private String ileName;
+    private String coverBook;
+    private String fileName;
+    private List<UserShopDto> userShopList;
 
-
-    public String getFileCover() {
-        return fileCover;
+    public List<UserShopDto> getUserShopList() {
+        return userShopList;
     }
 
-    public void setFileCover(String fileCover) {
-        this.fileCover = fileCover;
+    public void setUserShopList(List<UserShopDto> userShopList) {
+        this.userShopList = userShopList;
     }
 
-    public Long getIdBook() {
-        return idBook;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdBook(Long idBook) {
-        this.idBook = idBook;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -55,4 +55,19 @@ public class BookDto {
         this.genre = genre;
     }
 
+    public String getCoverBook() {
+        return coverBook;
+    }
+
+    public void setCoverBook(String coverBook) {
+        this.coverBook = coverBook;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 }

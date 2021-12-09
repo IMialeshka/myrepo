@@ -12,14 +12,30 @@ import java.util.List;
 public class UserShop implements UserDetails {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
-   private Long idUser;
+   private Long id;
    private String username;
    private String name;
    private String password;
    @ManyToMany(fetch = FetchType.EAGER)
    private List<Role> roles;
-   /*   @ManyToMany(fetch = FetchType.LAZY)
-   private List<Book> booksList;*/
+   @ManyToMany(mappedBy = "userShopList")
+   private List<Book> booksList;
+
+   public Long getId() {
+      return id;
+   }
+
+   public void setId(Long id) {
+      this.id = id;
+   }
+
+   public List<Book> getBooksList() {
+      return null;
+   }
+
+   public void setBooksList(List<Book> booksList) {
+      this.booksList = booksList;
+   }
 
    public List<Role> getRoles() {
       return roles;
@@ -64,10 +80,6 @@ public class UserShop implements UserDetails {
       return true;
    }
 
-   public void setIdUser(Long idUser) {
-      this.idUser = idUser;
-   }
-
    public void setUsername(String username) {
       this.username = username;
    }
@@ -80,19 +92,10 @@ public class UserShop implements UserDetails {
       this.password = password;
    }
 
-/*   public void setBooksList(List<Book> booksList) {
-      this.booksList = booksList;
-   }*/
 
-   public Long getIdUser() {
-      return idUser;
-   }
 
    public String getName() {
       return name;
    }
 
-/*   public List<Book> getBooksList() {
-      return booksList;
-   }*/
 }
