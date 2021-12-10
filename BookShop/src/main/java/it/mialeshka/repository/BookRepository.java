@@ -1,7 +1,6 @@
 package it.mialeshka.repository;
 
 import it.mialeshka.entity.Book;
-import it.mialeshka.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

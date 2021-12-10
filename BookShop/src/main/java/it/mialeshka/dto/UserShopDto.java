@@ -1,10 +1,5 @@
 package it.mialeshka.dto;
-import it.mialeshka.entity.Book;
-import it.mialeshka.entity.Role;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
 import java.util.List;
 
 

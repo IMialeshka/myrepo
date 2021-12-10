@@ -3,7 +3,6 @@ package it.mialeshka.util;
 
 import io.jsonwebtoken.*;
 import it.mialeshka.dto.RoleDto;
-import it.mialeshka.entity.Role;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

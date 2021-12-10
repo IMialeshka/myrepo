@@ -1,10 +1,8 @@
 package it.mialeshka.service.impl;
 
 import it.mialeshka.dto.UserShopDto;
-import it.mialeshka.entity.Role;
 import it.mialeshka.entity.UserShop;
 import it.mialeshka.mapper.UserShopMapper;
-import it.mialeshka.repository.RoleRepository;
 import it.mialeshka.service.UserShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,8 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import it.mialeshka.repository.UserShopRepository;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -31,11 +27,6 @@ public class UserShopServiceImpl implements UserShopService, UserDetailsService 
         UserShop user = userShopRepository.findUserByUserName(s);
         user.setRoles(userShopRepository.findAllUserRole(user.getId()));
 
-
-        if(user == null)
-        {
-            throw new UsernameNotFoundException("User not found");
-        }
         return user;
     }
 

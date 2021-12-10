@@ -8,14 +8,15 @@ import java.util.List;
 import java.util.Map;
 
 public interface BookService {
-  public BookDto addBook(BookDto book);
+  BookDto addBook(BookDto book);
 
-  String getLibraryDir();
+  String getPathToLibrary();
 
-  String getCoverDir();
+  String getPathToCovers();
 
-  public List<BookDto> allBooks();
-  public List<BookDto> allUserBooks(Long userId);
-  public String copyFileBook(MultipartFile file) throws LoadBookException;
-  public Map<String, String> getMetaInfoBook(String nameBookFile) throws LoadBookException;
+  List<BookDto> allBooks();
+  List<BookDto> allUserBooks(Long userId);
+  String copyFileBook(MultipartFile file) throws LoadBookException;
+  Map<String, String> getMetaInfoBook(String nameBookFile) throws LoadBookException;
+  void addBookSolr(BookDto bookDto);
 }

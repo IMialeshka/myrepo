@@ -27,7 +27,7 @@ public class AuthenticationRestController {
 
     @PostMapping(value ="/login")
     @ResponseBody
-    public ResponseEntity login(String username, String password)  {
+    public ResponseEntity<Map<String, String>> login(String username, String password)  {
         Map<String, String> jwt = new HashMap<>();
         try {
             authenticationManager.authenticate(

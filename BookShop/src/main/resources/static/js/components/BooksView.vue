@@ -48,7 +48,7 @@
                   >
                     mdi-chevron-right
                   </v-icon>
-                  <pdf :src="pdfdata" :page = numPage >
+                  <pdf :src="pdfdata" :page = numPage :key="componentKey">
                     <template slot="loading">
                       loading content here...
                     </template>
@@ -101,7 +101,9 @@ export default {
       dialog: false,
       bookFileRead : null,
       numPage: 1,
-      pdfdata: undefined
+      sizeBook: 0,
+      pdfdata: undefined,
+      componentKey: 0
     }
   },
   components:{
@@ -160,14 +162,19 @@ export default {
     },
     readBook (item) {
       this.bookFileRead = Object.assign({}, item).fileName;
-      this.pdfdata = pdfvuer.createLoadingTask("/readBook/"+this.bookFileRead);
-      this.pdfdata.then(pdf => {
-        console.log(pdf.numPages)
-      })
-      this.dialog = true;
+      if(this.bookFileRead.slice(-3) == "pdf"){
+        this.componentKey +=1;
+        this.pdfdata = pdfvuer.createLoadingTask("/readBook/"+this.bookFileRead);
+        this.pdfdata.then(pdf => {
+          this.sizeBook = pdf.numPages;
+        });
+        this.dialog = true;
+      }
     },
     forward(){
-      this.numPage++;
+      if(this.numPage != this.sizeBook){
+        this.numPage++;
+      }
     },
     back(){
       if(this.numPage != 1){

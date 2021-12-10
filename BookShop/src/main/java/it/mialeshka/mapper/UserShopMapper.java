@@ -11,6 +11,6 @@ public interface UserShopMapper {
     @Mappings({
             @Mapping(target = "password", constant = ""),
     })
-    public UserShopDto toUserShopDto(UserShop userShop);
-    public UserShop toUserShop(UserShopDto userShopDto);
+    UserShopDto toUserShopDto(UserShop userShop);
+    UserShop toUserShop(UserShopDto userShopDto);
 }

@@ -13,6 +13,8 @@
     "loader": "^2.1.1",
     "style-loader": "^3.3.1",
     "vue": "^2.6.14",
+    "vue-pdf-app": "^2.1.0",
+    "vue-pdf-embed": "^1.0.5",
     "vue-resource": "^1.5.3",
     "vue-router": "^3.5.3",
     "vuetify": "^2.6.1",

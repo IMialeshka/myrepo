@@ -1,6 +1,5 @@
 package it.mialeshka.repository;
 
-import it.mialeshka.entity.Book;
 import it.mialeshka.entity.Role;
 import it.mialeshka.entity.UserShop;
 import org.springframework.data.jpa.repository.JpaRepository;

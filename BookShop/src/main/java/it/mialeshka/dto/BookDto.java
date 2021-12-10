@@ -1,8 +1,6 @@
 package it.mialeshka.dto;
 
 
-import it.mialeshka.entity.UserShop;
-
 import java.util.List;
 
 

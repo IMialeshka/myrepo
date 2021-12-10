@@ -1,10 +1,7 @@
 package it.mialeshka.config;
 
-import it.mialeshka.service.UserShopService;
 import it.mialeshka.service.impl.UserShopServiceImpl;
-import it.mialeshka.util.JwtProvider;
 import it.mialeshka.util.JwtTokenFilter;
-import org.apache.catalina.filters.CorsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.http.HttpServletResponse;
 
